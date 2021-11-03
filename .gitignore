@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+rules.md
+test.gif
+
+db/
+seeds/
+
+
