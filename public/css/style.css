@@ -1,11 +1,28 @@
 header {
-    background-color: #B838DB ;
+    background-color: #756244;
 }
 
-h1{
-    color: black;
-    background-color: #178F1E;
+h3{
     padding: 5px;
-    margin-right: 10px;
+    margin-right: 50px;
     border-radius: 10px;
+}
+
+a {
+    color: white;
+}
+
+a:hover{
+    color: #60E0B3;   
+}
+
+.title{
+    padding: 5px;
+    background-color: #A86C0D;
+    border-radius: 10px;
+    box-shadow: 10px 10px #DB6427;
+}
+
+main{
+    background-color: #A86C0D;;
 }

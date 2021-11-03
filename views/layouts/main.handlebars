@@ -12,22 +12,26 @@
 <body>
   <div class="flex-column justify-space-around">
     <header class="display-flex justify-left align-center p-2">
-      <h1>
+      <h3>
         <a href="/">Home</a>
-      </h1>
-      <h1>
+      </h3>
+      <h3>
         <a href="/">Dashboard</a>
-      </h1>
+      </h3>
       {{#if logged_in}}
-      <h1>
+      <h3>
         <a href="/">Logout</a>
-      </h1>
+      </h3>
       {{else}}
-      <h1>
+      <h3>
         <a href="/">Login</a>
-      </h1>
+      </h3>
       {{/if}}
+      <div>
+        <h1 class="title">The Tech Blog</h1>
+      </div>
     </header>
+
     <main class="container container-fluid mt-5">
       <!-- Render the sub layout -->
       {{{ body }}}
