@@ -1,11 +1,11 @@
 <!-- Loop over each object in the projects array -->
 {{#each posts as |post| }}
-<div class="row mb-4 project">
-  <div class="col-md-5">
-    <h2>
-      <a href="/project/{{post.id}}">{{post.title}}</a>
+<div class="row mb-4 post">
+  <div class="col-md-12 title-bar">
+    <h2 class="label">
+      <a href="/posts/{{post.id}}">{{post.title}}</a>
     </h2>
-    <p>Posted by: {{post.user.user_name}} on {{post.createdAt}}</p>
+    <p class="label">Posted by: {{post.user.user_name}} on {{post.createdAt}}</p>
     {{!-- <p>
       <span for="img" aria-label="money">💲</span>
       <!-- Pass needed_funding value to the helper function -->
@@ -14,10 +14,11 @@
     </p>
     <p>Created by {{post.user.name_name}} on {{format_date post.created_at}}</p> --}}
   </div>
-  {{!-- <div class="col-md-7">
+  <div class="col-md-12">
     <p>
-      {{project.description}}
+      {{post.body}}
     </p>
-  </div> --}}
+  </div>
 </div>
+
 {{/each}}

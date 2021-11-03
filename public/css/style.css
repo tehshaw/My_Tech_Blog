@@ -23,6 +23,20 @@ a:hover{
     box-shadow: 10px 10px #DB6427;
 }
 
-main{
+.brbrown{
     background-color: #A86C0D;;
+}
+
+.title-bar{
+    display: flex;
+    padding: 5px;
+    background-color: #756244;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.post{
+    
+    border: 5px solid;
+    border-color: #756244;
 }
