@@ -1,0 +1,33 @@
+
+<div class="row mb-4 post">
+  <div class="col-md-12 title-bar">
+    <h2 class="label">
+      {{title}}
+    </h2>
+    <p class="label">Posted by: {{user.user_name}} on {{format_date createdAt}}</p>
+  </div>
+  <div class="col-md-12" style="min-height: 100px;">
+    <p>
+      {{body}}
+    </p>
+  </div>
+  <div class="col-md-12 mb-4 text-right">
+    {{#if areComment}}
+    <button class="btn" id="add">Add Comment</button>
+    {{/if}}
+    
+  </div>
+</div>
+
+<div id="commentHolder">
+{{log "comments = " areComment}}
+{{#if areComment}}
+{{> showComments}}
+{{else}}
+{{> submitComment}}
+{{/if}}
+
+</div>
+
+
+<script src="/js/post.js"></script>

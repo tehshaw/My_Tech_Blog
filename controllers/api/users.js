@@ -51,11 +51,15 @@ router.post("/login", async (req,res) => {
         })
 
         const user = userData.toJSON();
+        console.log(user);
     
         if(user){
             if(userData.checkPassword(req.body.password)){
                 req.session.logged_in = true;
                 req.session.user = user.id;
+
+                console.log("logged in!");
+                console.log(req.session);
                 res.status(200).end();
             }else{
                 res.status(500).end();

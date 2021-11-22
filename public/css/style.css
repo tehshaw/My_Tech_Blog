@@ -1,3 +1,8 @@
+body{
+    background-color: #A86C0D;
+    height: 100%;
+}
+
 header {
     background-color: #756244;
 }
@@ -14,6 +19,11 @@ a {
 
 a:hover{
     color: #60E0B3;   
+}
+
+#commentArea{
+    resize: none;
+    width:100%;
 }
 
 .title{

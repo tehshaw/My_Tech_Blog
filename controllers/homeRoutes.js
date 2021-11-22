@@ -22,8 +22,6 @@ router.get('/', async (req, res) => {
     // Serialize data so the template can read it
     const posts = postData.map((post) => post.get({ plain: true }));
 
-    req.session.logged_in = false;
-
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       posts, 
@@ -34,27 +32,96 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/posts/:id', withAuth, async (req, res) => {
+router.get('/posts/comment', withAuth, async (req,res) => {
+
+ const URL = req.headers.referer.split('/').pop()
+
+ try {
+  const commentData = await Post.findAll({
+    logging: false,
+    attributes: ['title', 'body', 'createdAt'],
+    where: {id:URL},
+    include: [
+      {
+        model: User,
+        attributes: ['user_name']
+      }
+    ],
+    order: [['createdAt' , 'ASC']]
+  })
+
+  const post = commentData.map((post) => post.toJSON())
+
+  res.render('post', {
+    ...post[0],
+    logged_in: req.session.logged_in,
+    postID: URL
+  });
+
+  
+  }
+  catch(err){
+    res.status(500).json(err);
+  }
+
+
+})
+
+router.post('/posts/comment', withAuth, async (req,res) => {
+
+  const {body,postID} = req.body
 
   try {
-    const commentData = await Comment.findAll({
-      attributes: [ 'body' ],
-      where: {postId: req.params.id},
-      include: [
+    const commentData = await Comment.create({
+      body: body, 
+      userId: req.session.user,
+      postId: postID
+     })
+
+    res.status(201).end()
+
+  }
+  catch(err){
+    res.status(500).json(err);
+  }
+
+
+})
+
+
+router.get('/posts/:id', withAuth, async (req, res, next) => {
+
+  try {
+    const commentData = await Post.findAll({
+      logging: false,
+      attributes: ['title', 'body', 'createdAt'],
+      where: {id:req.params.id},
+      include: [ 
         {
-          model: Post,
-          attributes: ['title'],
+          model:Comment,
+          attributes: ['body','createdAt'],
+          include: [
+            {
+              model: User,
+              attributes: ['user_name']
+            }
+          ]
         },
-      ]
-    });
+        {
+          model: User,
+          attributes: ['user_name']
+        }
+      ],
+      order: [['createdAt' , 'ASC']]
+    })
 
-    const comments = commentData.map((comment) => comment.get({ plain: true }));
+    const post = commentData.map((post) => post.toJSON())
+    console.log(post[0]);
 
-    res.send(comments)
-
-    res.render('project', {
-      ...project,
-      logged_in: req.session.logged_in
+    res.render('post', {
+      ...post[0],
+      logged_in: req.session.logged_in,
+      areComment: true
     });
   } catch (err) {
     res.status(500).json(err);

@@ -1,0 +1,14 @@
+  {{#each comments as |comment| }}
+
+    <div class="row mb-4 post">
+        <div class="col-md-12 title-bar">
+          <p class="label justify-flex-end">{{comment.user.user_name}} : {{format_date comment.createdAt}}</p>
+        </div>
+        <div class="col-md-12" style="min-height: 50px;">
+          <p>
+            {{comment.body}}
+          </p>
+        </div>
+    </div>
+
+  {{/each}}
