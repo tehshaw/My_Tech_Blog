@@ -21,7 +21,7 @@ a:hover{
     color: #60E0B3;   
 }
 
-#commentArea{
+#commentArea, #postArea{
     resize: none;
     width:100%;
 }
@@ -42,7 +42,7 @@ a:hover{
     padding: 5px;
     background-color: #756244;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-end;   
 }
 
 .post{

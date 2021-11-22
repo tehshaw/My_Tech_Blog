@@ -1,11 +1,21 @@
 <!-- Loop over each object in the projects array -->
-{{#each users as |post| }}
+<div class="row mb-4">
+<div class="col-md-12 title-bar">
+  <h1>My Posts</h1>
+  {{!-- <button class="btn label">Add Post</button> --}}
+  <a href="/profile/post" class='btn'>Add Post</a>
+</div>
+
+
+</div>
+
+{{#each posts as |post| }}
 <div class="row mb-4 post">
   <div class="col-md-12 title-bar">
     <h2 class="label">
       <a href="/posts/{{post.id}}">{{post.title}}</a>
     </h2>
-    <p class="label">{{post.createdAt}}</p>
+    <p class="label">{{format_date post.createdAt}}</p>
   </div>
   <div class="col-md-12">
     <p>
@@ -15,3 +25,5 @@
 </div>
 
 {{/each}}
+
+

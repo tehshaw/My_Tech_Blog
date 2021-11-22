@@ -98,5 +98,23 @@ router.get('/comment', withAuth, async (req,res) => {
      }
    });
 
+   router.post('/new', withAuth, async (req, res) => {
+   
+    try {
+        const newPost = await Post.create({
+          title: req.body.title,
+          body: req.body.body,
+          userId: req.session.user
+        })
+
+        res.status(200).end()
+
+    }
+    catch(err){
+
+    }
+        
+    })
+
 
    module.exports = router;
