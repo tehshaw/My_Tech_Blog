@@ -32,101 +32,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/posts/comment', withAuth, async (req,res) => {
-
- const URL = req.headers.referer.split('/').pop()
-
- try {
-  const commentData = await Post.findAll({
-    logging: false,
-    attributes: ['title', 'body', 'createdAt'],
-    where: {id:URL},
-    include: [
-      {
-        model: User,
-        attributes: ['user_name']
-      }
-    ],
-    order: [['createdAt' , 'ASC']]
-  })
-
-  const post = commentData.map((post) => post.toJSON())
-
-  res.render('post', {
-    ...post[0],
-    logged_in: req.session.logged_in,
-    postID: URL
-  });
-
-  
-  }
-  catch(err){
-    res.status(500).json(err);
-  }
-
-
-})
-
-router.post('/posts/comment', withAuth, async (req,res) => {
-
-  const {body,postID} = req.body
-
-  try {
-    const commentData = await Comment.create({
-      body: body, 
-      userId: req.session.user,
-      postId: postID
-     })
-
-    res.status(201).end()
-
-  }
-  catch(err){
-    res.status(500).json(err);
-  }
-
-
-})
-
-
-router.get('/posts/:id', withAuth, async (req, res, next) => {
-
-  try {
-    const commentData = await Post.findAll({
-      logging: false,
-      attributes: ['title', 'body', 'createdAt'],
-      where: {id:req.params.id},
-      include: [ 
-        {
-          model:Comment,
-          attributes: ['body','createdAt'],
-          include: [
-            {
-              model: User,
-              attributes: ['user_name']
-            }
-          ]
-        },
-        {
-          model: User,
-          attributes: ['user_name']
-        }
-      ],
-      order: [['createdAt' , 'ASC']]
-    })
-
-    const post = commentData.map((post) => post.toJSON())
-    console.log(post[0]);
-
-    res.render('post', {
-      ...post[0],
-      logged_in: req.session.logged_in,
-      areComment: true
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 
 // Use withAuth middleware to prevent access to route
 router.get('/profile', withAuth, async (req, res) => {
@@ -158,4 +63,23 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+
+
+router.get('/logout', (req, res) => {
+
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(200).redirect('/')
+    });
+  }else{
+    res.status(404).end()
+  }
+
+  
+
+});
+
 module.exports = router;
+
+
+
